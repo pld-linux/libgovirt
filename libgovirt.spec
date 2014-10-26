@@ -5,15 +5,16 @@
 Summary:	goVirt library - GLib binding for oVirt REST API
 Summary(pl.UTF-8):	Biblioteka goVirt - wiązanie GLib do API REST-owego oVirt
 Name:		libgovirt
-Version:	0.3.1
+Version:	0.3.2
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
-# Source0-md5:	0cd330ef0acc0572d26427a07e2d7637
+# Source0-md5:	9af2474d8ff0204200426fc3dbe90c02
 URL:		https://github.com/GNOME/libgovirt
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gobject-introspection-devel >= 1.30.0
+BuildRequires:	intltool >= 0.40.0
 BuildRequires:	rest-devel >= 0.7.92
 Requires:	glib2 >= 1:2.26.0
 Requires:	rest >= 0.7.92
@@ -74,13 +75,15 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS MAINTAINERS NEWS README
 %attr(755,root,root) %{_libdir}/libgovirt.so.*.*.*
