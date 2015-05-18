@@ -5,12 +5,12 @@
 Summary:	goVirt library - GLib binding for oVirt REST API
 Summary(pl.UTF-8):	Biblioteka goVirt - wiązanie GLib do API REST-owego oVirt
 Name:		libgovirt
-Version:	0.3.2
-Release:	2
+Version:	0.3.3
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
-# Source0-md5:	9af2474d8ff0204200426fc3dbe90c02
+# Source0-md5:	c7c1275e118cd02a5a9e3b8ce08a2668
 URL:		https://github.com/GNOME/libgovirt
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gobject-introspection-devel >= 1.30.0
