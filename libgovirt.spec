@@ -1,25 +1,28 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static library
 #
 Summary:	goVirt library - GLib binding for oVirt REST API
 Summary(pl.UTF-8):	Biblioteka goVirt - wiązanie GLib do API REST-owego oVirt
 Name:		libgovirt
-Version:	0.3.8
-Release:	2
+Version:	0.3.9
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	https://download.gnome.org/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
-# Source0-md5:	84feb9d6a0343787329d560b5711492b
+# Source0-md5:	6ebc2a24f30e456070f8840792793b13
 URL:		https://github.com/GNOME/libgovirt
 BuildRequires:	gettext-tools >= 0.19.4
-BuildRequires:	glib2-devel >= 1:2.38.0
+BuildRequires:	glib2-devel >= 1:2.66
 BuildRequires:	gobject-introspection-devel >= 1.30.0
-BuildRequires:	rest-devel >= 0.7.92
+BuildRequires:	meson >= 0.49.0
+BuildRequires:	ninja >= 1.5
+BuildRequires:	rest1-devel >= 0.9
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires:	glib2 >= 1:2.38.0
-Requires:	rest >= 0.7.92
+Requires:	glib2 >= 1:2.66
+Requires:	rest1 >= 0.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,8 +41,8 @@ Summary:	Header files for goVirt library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki goVirt
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.38.0
-Requires:	rest-devel >= 0.7.92
+Requires:	glib2-devel >= 1:2.66
+Requires:	rest1-devel >= 0.9
 
 %description devel
 Header files for goVirt library.
@@ -62,22 +65,21 @@ Statyczna biblioteka goVirt.
 %prep
 %setup -q
 
+# tests expect libsoup3-based rest1
+%{__sed} -i -e "/subdir('tests')/d" meson.build
+
 %build
-%configure \
-	--disable-silent-rules \
-	%{!?with_static_libs:--disable-static}
-%{__make}
+%meson build \
+	%{!?with_static_libs:--default-library=shared}
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
-
-%find_lang %{name}
+%find_lang govirt-1.0
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -85,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files -f %{name}.lang
+%files -f govirt-1.0.lang
 %defattr(644,root,root,755)
 %doc AUTHORS MAINTAINERS NEWS README
 %attr(755,root,root) %{_libdir}/libgovirt.so.*.*.*
