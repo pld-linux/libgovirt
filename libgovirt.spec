@@ -17,6 +17,7 @@ BuildRequires:	glib2-devel >= 1:2.66
 BuildRequires:	gobject-introspection-devel >= 1.30.0
 BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
+BuildRequires:	pkgconfig
 BuildRequires:	rest1-devel >= 0.9
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
