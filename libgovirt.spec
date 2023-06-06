@@ -66,9 +66,6 @@ Statyczna biblioteka goVirt.
 %prep
 %setup -q
 
-# tests expect libsoup3-based rest1
-%{__sed} -i -e "/subdir('tests')/d" meson.build
-
 %build
 %meson build \
 	%{!?with_static_libs:--default-library=shared}
