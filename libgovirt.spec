@@ -6,7 +6,7 @@ Summary:	goVirt library - GLib binding for oVirt REST API
 Summary(pl.UTF-8):	Biblioteka goVirt - wiązanie GLib do API REST-owego oVirt
 Name:		libgovirt
 Version:	0.3.9
-Release:	2
+Release:	3
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	https://download.gnome.org/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -15,15 +15,15 @@ URL:		https://github.com/GNOME/libgovirt
 BuildRequires:	gettext-tools >= 0.19.4
 BuildRequires:	glib2-devel >= 1:2.66
 BuildRequires:	gobject-introspection-devel >= 1.30.0
+BuildRequires:	librest-devel >= 0.9.1-2
 BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rest1-devel >= 0.9.1-2
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	glib2 >= 1:2.66
-Requires:	rest1 >= 0.9.1-2
+Requires:	librest >= 0.9.1-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,7 +43,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki goVirt
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.66
-Requires:	rest1-devel >= 0.9.1-2
+Requires:	librest-devel >= 0.9.1-2
 
 %description devel
 Header files for goVirt library.
